@@ -3,7 +3,6 @@ package com.vg.tradestore.controller;
 import java.util.Comparator;
 import java.util.List;
 
-import org.aspectj.weaver.patterns.IScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +23,17 @@ public class TradeController {
 	@Autowired
 	private TradeService tradeService;
 
+	@GetMapping("/trades")
+	public ResponseEntity<List<Trade>> retrieveTrades() {
+
+		try {
+			List<Trade> tradeList = tradeService.retrieveTradeList();
+			return ResponseEntity.ok(tradeList);
+		} catch (Exception e) {
+			throw new TradeException(e.getMessage());
+		}
+	}
+
 	@GetMapping("/{tradeId}")
 	public ResponseEntity<Trade> retrieveTrade(@PathVariable String tradeId) {
 
@@ -34,7 +44,7 @@ public class TradeController {
 			}
 			return ResponseEntity.ok(tradeList.stream()
 					.sorted(Comparator.comparingInt(t -> ((Trade) t).getVersion()).reversed()).findFirst().get());
-		} catch (Exception e ) {
+		} catch (Exception e) {
 			throw new TradeException(e.getMessage());
 		}
 	}
@@ -46,7 +56,7 @@ public class TradeController {
 			return ResponseEntity.ok(savedTrade);
 		} catch (Exception ex) {
 			throw new TradeException(ex.getMessage());
-	}
+		}
 	}
 
 }

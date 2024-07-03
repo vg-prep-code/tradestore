@@ -17,7 +17,7 @@ public class SecurityConfig {
 		http.csrf().disable();
 		http.headers().frameOptions().disable();
 				return http.authorizeHttpRequests(
-						requests -> requests.requestMatchers("/v1/tradestore/trade", "/v1/tradestore/**").permitAll().anyRequest().authenticated())
+						requests -> requests.requestMatchers("/v1/tradestore/trade", "/v1/tradestore/trades", "/v1/tradestore/**").permitAll().anyRequest().authenticated())
 				.oauth2Login(withDefaults()).formLogin(withDefaults()).build();
 
 	}

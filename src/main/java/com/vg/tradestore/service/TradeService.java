@@ -19,6 +19,11 @@ public class TradeService {
 
 	@Autowired
 	private TradeRepository tradeRepository;
+	
+	public List<Trade> retrieveTradeList() throws TradeException {
+		List<Trade> tradeList = tradeRepository.findAll();
+		return tradeList;
+	}
 
 	public List<Trade> retrieveTradeList(String tradeId) throws TradeException {
 		List<Trade> tradeList = tradeRepository.findByTradeId(tradeId);
